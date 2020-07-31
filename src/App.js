@@ -1,24 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect } from 'react';
+import styles from './app.module.scss';
+import { Cards, Chart, CountryPicker } from './components';
+import Axios from 'axios';
+import url from './constants';
+import corooona from './images/image.png';
+import { Typography,Divider  } from '@material-ui/core';
 
-function App() {
+function App(){
+
+  const [responceData, setResponceData ] = useState({});
+  const [country, setCountry ] = useState("");
+  
+          useEffect(()=>{
+
+              let changeUrl = url;
+
+              if(country)
+              {
+                  changeUrl = `${url}/countries/${country}`;
+              }
+
+              Axios.get(changeUrl)
+                .then(({data})=>{
+
+                const modifiedData = {
+                  confirmed : data.confirmed,
+                  recovered : data.recovered,
+                  deaths : data.deaths,
+                  lastUpdate : data.lastUpdate,
+                };
+
+            setResponceData(modifiedData);   
+          });
+
+       },[country]);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.container}>
+
+      <img src={corooona} alt="COVOD-19 Tracker" className={styles.image}/>
+      <Cards data={responceData}></Cards>
+      <CountryPicker setCountry={setCountry}></CountryPicker>
+      <Chart responceData={responceData} country={country} />
+      <Divider style={{width: '80%' , marginTop:'30px'}} />
+      <Typography className={styles.typo} variant="caption">@Hemang Nakarani</Typography>
     </div>
   );
 }

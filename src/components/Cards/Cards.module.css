@@ -1,0 +1,31 @@
+.container{
+    flex-wrap: wrap;
+    margin: 50px 2px;
+}
+
+.card{
+    width: auto;
+    margin: 2% 2% 2% 2%  !important;
+}
+
+.infected{
+    border-bottom: 10px solid rgba(0, 0, 250, 0.5);
+}
+
+.recovered{
+    border-bottom: 10px solid rgba(0, 250, 0.5);
+}
+
+.Active{
+    border-bottom: 10px solid rgba(250, 246, 1, 0.863);
+}
+
+.deaths{
+    border-bottom: 10px solid rgba(250, 0, 0.5);
+}
+
+@media only screen and (max-width: 770px) {
+    .card {
+      margin: 2% 0 !important;
+    }
+  }
